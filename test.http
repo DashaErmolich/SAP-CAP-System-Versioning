@@ -1,0 +1,55 @@
+@server=http://localhost:4009
+
+
+POST {{server}}/app/Data
+Content-Type: application/json
+
+{
+    "title": "Foo4",
+    "type": "A"
+}
+
+###
+PATCH {{server}}/app/Data/1
+Content-Type: application/json
+
+{
+    "title": "Foo4"
+}
+
+
+###
+GET {{server}}/app/Data
+Content-Type: application/json
+
+###
+GET {{server}}/app/DataVersions
+Content-Type: application/json
+
+###
+GET {{server}}/app/MasterData
+Content-Type: application/json
+
+###
+GET {{server}}/app/DataHistory
+Content-Type: application/json
+
+
+###
+POST {{server}}/app/MasterData
+Content-Type: application/json
+
+{
+    "title": "Title 1",
+    "type": "B"
+}
+
+
+###
+PATCH  {{server}}/app/MasterData/0e0e350d-7015-4383-a8d7-679285a04f75
+Content-Type: application/json
+
+{
+    "title": "Title 5",
+    "type": "B"
+}
