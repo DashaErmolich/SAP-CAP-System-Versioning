@@ -55,10 +55,15 @@ Content-Type: application/json
 }
 
 ### UPDATE TEST DATA 1
-PATCH  {{server}}/app/TestData/d874af82-ea8f-4127-94d2-2077de31b0e9
+PATCH  {{server}}/app/TestData/765897c6-a6b2-4431-9a42-818397b51867
 Content-Type: application/json
 
 {
     "title": "Title 2",
     "type": "B"
 }
+
+
+
+### DELETE TEST DATA 1
+DELETE   {{server}}/app/TestData/765897c6-a6b2-4431-9a42-818397b51867
