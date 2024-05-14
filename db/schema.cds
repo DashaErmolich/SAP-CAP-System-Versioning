@@ -22,17 +22,7 @@ aspect SVData {
 
 aspect versioned {
     version : Integer default 1;
-}
-
-entity Data : MyData, managed {
-    key ID       : Integer;
-        versions : Composition of many DataVersions
-                       on versions.data = $self;
-}
-
-entity DataVersions : cuid, MyData {
-    data    : Association to one Data;
-    version : Integer;
+    testVersion: Integer default 1;
 }
 
 entity MasterData : cuid, MyData, SVData, versioned {
@@ -40,5 +30,13 @@ entity MasterData : cuid, MyData, SVData, versioned {
 }
 
 entity DataHistory : MyData, SVData, versioned {
+    ID     : String(36);
+}
+
+entity TestData: cuid, MyData, SVData, versioned {
+
+}
+
+entity TestDataHistory : MyData, SVData, versioned {
     ID     : String(36);
 }

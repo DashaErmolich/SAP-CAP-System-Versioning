@@ -3,14 +3,13 @@ using db from '../db/schema';
 @path    : '/app'
 @requires: 'any'
 service AppService {
-    entity Data         as projection on db.Data;
-    entity DataVersions as projection on db.DataVersions;
-
-    view DataTypeA as
-        select from Data
+    view MasterDataA as
+        select from MasterData
         where
             type = 'A';
 
     entity MasterData as projection on db.MasterData;
     entity DataHistory as projection on db.DataHistory;
+    entity TestData as projection on db.TestData;
+    entity TestDataHistory as projection on db.TestDataHistory;
 }

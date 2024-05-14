@@ -17,7 +17,7 @@
   },
   "scripts": {
     "start": "cds-serve",
-    "watch": "cds watch --profile hybrid --port 4010",
+    "watch": "cds watch --profile hybrid",
     "hana:deploy": "cds deploy --to hana --profile hybrid --auto-undeploy"
   },
   "cds": {

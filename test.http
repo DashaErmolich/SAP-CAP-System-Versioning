@@ -1,41 +1,23 @@
-@server=http://localhost:4009
+@server=http://localhost:4004
 
-
-POST {{server}}/app/Data
-Content-Type: application/json
-
-{
-    "title": "Foo4",
-    "type": "A"
-}
-
-###
-PATCH {{server}}/app/Data/1
-Content-Type: application/json
-
-{
-    "title": "Foo4"
-}
-
-
-###
-GET {{server}}/app/Data
-Content-Type: application/json
-
-###
-GET {{server}}/app/DataVersions
-Content-Type: application/json
-
-###
+### GET ALL MASTER DATA
 GET {{server}}/app/MasterData
 Content-Type: application/json
 
-###
+### GET ALL DATA HISTORY
 GET {{server}}/app/DataHistory
 Content-Type: application/json
 
+### GET ALL TEST DATA
+GET {{server}}/app/TestData
+Content-Type: application/json
 
-###
+### GET ALL TEST DATA HISTORY
+GET {{server}}/app/TestDataHistory
+Content-Type: application/json
+
+
+### CREATE MASTER DATA
 POST {{server}}/app/MasterData
 Content-Type: application/json
 
@@ -44,12 +26,39 @@ Content-Type: application/json
     "type": "B"
 }
 
+### CREATE TEST DATA
+POST {{server}}/app/TestData
+Content-Type: application/json
 
-###
+{
+    "title": "Title 1",
+    "type": "A"
+}
+
+
+### UPDATE MASTER DATA 1
 PATCH  {{server}}/app/MasterData/0e0e350d-7015-4383-a8d7-679285a04f75
 Content-Type: application/json
 
 {
-    "title": "Title 5",
+    "title": "Title 6",
+    "type": "B"
+}
+
+### UPDATE MASTER DATA 2
+PATCH  {{server}}/app/MasterData/d92509f1-5a6f-4700-9bab-9c37c6eb56fd
+Content-Type: application/json
+
+{
+    "title": "Title 4",
+    "type": "B"
+}
+
+### UPDATE TEST DATA 1
+PATCH  {{server}}/app/TestData/d874af82-ea8f-4127-94d2-2077de31b0e9
+Content-Type: application/json
+
+{
+    "title": "Title 2",
     "type": "B"
 }
