@@ -12,4 +12,7 @@ service AppService {
     entity DataHistory as projection on db.DataHistory;
     entity TestData as projection on db.TestData;
     entity TestDataHistory as projection on db.TestDataHistory;
+    entity DataTempStorage as projection on db.DataTempStorage;
+
+    action updateData();
 }

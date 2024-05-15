@@ -17,8 +17,8 @@
   },
   "scripts": {
     "start": "cds-serve",
-    "watch": "cds watch --profile hybrid",
-    "hana:deploy": "cds deploy --to hana --profile hybrid --auto-undeploy"
+    "dev": "cds watch --profile hybrid",
+    "hana": "cds deploy --to hana --profile hybrid --auto-undeploy"
   },
   "cds": {
     "requires": {

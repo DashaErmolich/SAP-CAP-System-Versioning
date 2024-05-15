@@ -1,5 +1,9 @@
 @server=http://localhost:4004
 
+# =================== READ ===================
+
+
+
 ### GET ALL MASTER DATA
 GET {{server}}/app/MasterData
 Content-Type: application/json
@@ -15,6 +19,15 @@ Content-Type: application/json
 ### GET ALL TEST DATA HISTORY
 GET {{server}}/app/TestDataHistory
 Content-Type: application/json
+
+### GET ALL DATA TEMP STORAGE
+GET {{server}}/app/DataTempStorage
+Content-Type: application/json
+
+
+
+# =================== CREATE ===================
+
 
 
 ### CREATE MASTER DATA
@@ -36,6 +49,9 @@ Content-Type: application/json
 }
 
 
+# =================== UPDATE ===================
+
+
 ### UPDATE MASTER DATA 1
 PATCH  {{server}}/app/MasterData/0e0e350d-7015-4383-a8d7-679285a04f75
 Content-Type: application/json
@@ -55,7 +71,7 @@ Content-Type: application/json
 }
 
 ### UPDATE TEST DATA 1
-PATCH  {{server}}/app/TestData/765897c6-a6b2-4431-9a42-818397b51867
+PATCH  {{server}}/app/TestData/caabf45b-e0e9-4f14-8d42-2ff811c9a27e
 Content-Type: application/json
 
 {
@@ -64,6 +80,20 @@ Content-Type: application/json
 }
 
 
+# =================== DELETE ===================
+
+
 
 ### DELETE TEST DATA 1
 DELETE   {{server}}/app/TestData/765897c6-a6b2-4431-9a42-818397b51867
+
+
+
+# =================== ACTIONS ===================
+
+
+###
+POST {{server}}/app/updateData
+Content-Type: application/json
+
+{}

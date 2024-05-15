@@ -5,6 +5,12 @@ using {
 
 namespace db;
 
+type myUUID: String(36);
+
+aspect History {
+    ID: myUUID;
+}
+
 aspect MyData {
     title : String(32);
     type  : String(1);
@@ -29,14 +35,16 @@ entity MasterData : cuid, MyData, SVData, versioned {
 
 }
 
-entity DataHistory : MyData, SVData, versioned {
-    ID     : String(36);
+entity DataHistory : MyData, History, SVData, versioned {
 }
 
 entity TestData: cuid, MyData, SVData, versioned {
 
 }
 
-entity TestDataHistory : MyData, SVData, versioned {
-    ID     : String(36);
+entity TestDataHistory : MyData, History, SVData, versioned {
+}
+
+entity DataTempStorage: MyData, History, versioned {
+
 }
