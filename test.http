@@ -75,8 +75,8 @@ PATCH  {{server}}/app/TestData/caabf45b-e0e9-4f14-8d42-2ff811c9a27e
 Content-Type: application/json
 
 {
-    "title": "Title 2",
-    "type": "B"
+    "title": "Title 5",
+    "type": "A"
 }
 
 

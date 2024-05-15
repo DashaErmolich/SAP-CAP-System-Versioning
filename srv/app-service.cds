@@ -1,4 +1,6 @@
 using db from '../db/schema';
+using { sap.changelog as changeLog } from '@cap-js/change-tracking/index';
+
 
 @path    : '/app'
 @requires: 'any'
@@ -13,6 +15,9 @@ service AppService {
     entity TestData as projection on db.TestData;
     entity TestDataHistory as projection on db.TestDataHistory;
     entity DataTempStorage as projection on db.DataTempStorage;
+
+    @readonly
+    view ChangeView as select from changeLog.ChangeView;
 
     action updateData();
 }
