@@ -93,7 +93,7 @@ DELETE   {{server}}/app/Data/b5318e80-3ccd-4f64-9ae9-039cca712d66
 
 
 ###
-POST {{server}}/app/updateData
+POST {{server}}/app/changeData
 Content-Type: application/json
 
 {}

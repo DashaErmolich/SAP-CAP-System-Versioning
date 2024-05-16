@@ -31,17 +31,20 @@ module.exports = function (srv) {
     })
 
 
-    this.on('updateData', async () => {
+    this.on('changeData', async () => {
         const data = await SELECT.from(DataTempStorage);
 
         for (let d of data) {
             const { ID } = d;
             const { status_code } = await SELECT.one.from(DataStatuses).where({ data_ID: ID }).columns('status_code');
             switch (status_code) {
-                case 'TBU':
-                case 'U': {
+                case 'TBU': {
                     await UPDATE(Data, ID).with({ ...d });
                     await setStatus(ID, 'U');
+                    break;
+                };
+                case 'U': {
+                    await UPDATE(Data, ID).with({ ...d });
                     break;
                 };
                 case 'TBD': {

@@ -27,5 +27,5 @@ service AppService {
 
     entity DataStatuses as projection on db.DataStatuses;
 
-    action updateData();
+    action changeData();
 }
