@@ -25,6 +25,9 @@
     "requires": {
       "db": "hana",
       "auth": "xsuaa"
+    },
+    "sql": {
+      "transitive_localized_views": false
     }
   }
 }

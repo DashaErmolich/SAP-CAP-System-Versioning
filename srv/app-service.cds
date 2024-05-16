@@ -5,19 +5,23 @@ using { sap.changelog as changeLog } from '@cap-js/change-tracking/index';
 @path    : '/app'
 @requires: 'any'
 service AppService {
-    view MasterDataA as
-        select from MasterData
+    view DataA as
+        select from Data
         where
             type = 'A';
 
-    entity MasterData as projection on db.MasterData;
+    entity Data as projection on db.Data;
     entity DataHistory as projection on db.DataHistory;
-    entity TestData as projection on db.TestData;
-    entity TestDataHistory as projection on db.TestDataHistory;
     entity DataTempStorage as projection on db.DataTempStorage;
 
     @readonly
-    view ChangeView as select from changeLog.ChangeView;
+    view DataChangeView as select from changeLog.ChangeView;
+
+    view DataWithStatuses as select from Data{
+        *, status.status.name as status
+    };
+
+    entity DataStatuses as projection on db.DataStatuses;
 
     action updateData();
 }

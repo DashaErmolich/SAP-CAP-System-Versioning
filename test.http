@@ -1,27 +1,33 @@
 @server=http://localhost:4004
 
+
+
 # =================== READ ===================
 
 
 
-### GET ALL MASTER DATA
-GET {{server}}/app/MasterData
+### GET ALL DATA
+GET {{server}}/app/Data
 Content-Type: application/json
 
 ### GET ALL DATA HISTORY
 GET {{server}}/app/DataHistory
 Content-Type: application/json
 
-### GET ALL TEST DATA
-GET {{server}}/app/TestData
-Content-Type: application/json
-
-### GET ALL TEST DATA HISTORY
-GET {{server}}/app/TestDataHistory
-Content-Type: application/json
-
 ### GET ALL DATA TEMP STORAGE
 GET {{server}}/app/DataTempStorage
+Content-Type: application/json
+
+### GET Change log
+GET {{server}}/app/DataChangeView
+Content-Type: application/json
+
+### GET DataWithStatuses
+GET {{server}}/app/DataWithStatuses
+Content-Type: application/json
+
+### GET DataStatuses
+GET {{server}}/app/DataStatuses
 Content-Type: application/json
 
 
@@ -30,8 +36,8 @@ Content-Type: application/json
 
 
 
-### CREATE MASTER DATA
-POST {{server}}/app/MasterData
+### CREATE DATA
+POST {{server}}/app/Data
 Content-Type: application/json
 
 {
@@ -39,53 +45,47 @@ Content-Type: application/json
     "type": "B"
 }
 
-### CREATE TEST DATA
-POST {{server}}/app/TestData
-Content-Type: application/json
-
-{
-    "title": "Title 1",
-    "type": "A"
-}
 
 
 # =================== UPDATE ===================
 
 
-### UPDATE MASTER DATA 1
-PATCH  {{server}}/app/MasterData/0e0e350d-7015-4383-a8d7-679285a04f75
+
+### UPDATE DATA 1
+PATCH  {{server}}/app/Data/538c3507-e6f4-42c8-bcb5-90f3a91ae309
 Content-Type: application/json
 
 {
-    "title": "Title 6",
-    "type": "B"
-}
-
-### UPDATE MASTER DATA 2
-PATCH  {{server}}/app/MasterData/d92509f1-5a6f-4700-9bab-9c37c6eb56fd
-Content-Type: application/json
-
-{
-    "title": "Title 4",
-    "type": "B"
-}
-
-### UPDATE TEST DATA 1
-PATCH  {{server}}/app/TestData/caabf45b-e0e9-4f14-8d42-2ff811c9a27e
-Content-Type: application/json
-
-{
-    "title": "Title 5",
+    "title": "Title 7",
     "type": "A"
 }
+
+### UPDATE DATA 2
+PATCH  {{server}}/app/Data/62a386d6-80df-495e-af5a-15c7184e3400
+Content-Type: application/json
+
+{
+    "title": "Title 2",
+    "type": "B"
+}
+
+
+### UPDATE DATA STATUS
+PATCH  {{server}}/app/DataStatuses/538c3507-e6f4-42c8-bcb5-90f3a91ae309
+Content-Type: application/json
+
+{
+    "status_code": "TBU"
+}
+
 
 
 # =================== DELETE ===================
 
 
 
-### DELETE TEST DATA 1
-DELETE   {{server}}/app/TestData/765897c6-a6b2-4431-9a42-818397b51867
+### DELETE DATA 1
+DELETE   {{server}}/app/Data/ec353784-9ceb-46af-999a-7b139d8d9f17
 
 
 

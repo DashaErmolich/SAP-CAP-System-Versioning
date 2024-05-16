@@ -1,14 +1,15 @@
 using {
     cuid,
-    managed
+    managed,
+    sap.common.CodeList as CodeList
 } from '@sap/cds/common';
 
 namespace db;
 
-type myUUID: String(36);
+type myUUID : String(36);
 
 aspect History {
-    ID: myUUID;
+    ID : myUUID;
 }
 
 aspect MyData {
@@ -17,34 +18,41 @@ aspect MyData {
 }
 
 aspect SVData {
-    // @cds.api.ignore
+    @cds.api.ignore
     @assert.notNull: false
     validFrom : Timestamp not null;
 
-    // @cds.api.ignore
+    @cds.api.ignore
     @assert.notNull: false
     validTo   : Timestamp not null;
 }
 
-aspect versioned {
-    version : Integer default 1;
-    testVersion: Integer default 1;
+aspect Version {
+    version         : Integer default 1;
+    sequenceVersion : Integer default 1;
 }
 
-entity MasterData : cuid, MyData, SVData, versioned {
-
+aspect Status {
+    status : Association to one DataStatuses;
 }
 
-entity DataHistory : MyData, History, SVData, versioned {
+entity Statuses : CodeList {
+    key code : String(3);
 }
 
-entity TestData: cuid, MyData, SVData, versioned {
-
+entity DataStatuses {
+    key data   : Association to one Data;
+    status : Association to one Statuses;
 }
 
-entity TestDataHistory : MyData, History, SVData, versioned {
+entity Data : cuid, managed, MyData, SVData, Version {
+        status : Association to one DataStatuses on status.data.ID = ID;
 }
 
-entity DataTempStorage: MyData, History, versioned {
+entity DataHistory : History, managed, MyData, SVData, Version {
+        status : Association to one DataStatuses on status.data.ID = ID;
+}
+
+entity DataTempStorage : History, managed, MyData {
 
 }

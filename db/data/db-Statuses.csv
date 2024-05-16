@@ -1,0 +1,5 @@
+code;name;descr
+N;NEW;New data
+U;UPDATED;Updated data
+D;DELETED;Deleted data
+TBU;SCHEDULED_TO_CHANGE;To be updated data
