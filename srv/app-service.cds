@@ -21,6 +21,10 @@ service AppService {
         *, status.status.name as status
     };
 
+    view DataHistoryWithStatuses as select from DataHistory{
+        *, status.status.name as status
+    };
+
     entity DataStatuses as projection on db.DataStatuses;
 
     action updateData();

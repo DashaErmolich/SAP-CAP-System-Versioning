@@ -1,19 +1,33 @@
 module.exports = function (srv) {
-    const { Data, DataHistory, DataTempStorage, DataStatuses } = srv.entities;
-
-    // this.on('READ', '*', async () => {
-    //     await DELETE.from(Data);
-    //     await DELETE.from(DataHistory);
-    //     await DELETE.from(DataTempStorage);
-    // })
+    const { Data, DataTempStorage, DataStatuses } = srv.entities;
 
     this.on('UPDATE', Data, async (req, next) => {
         if (!req.data.ID) {
             next();
         }
         const tmp = await SELECT.from(Data, req.data.ID);
-        await INSERT.into(DataTempStorage).entries({ ...tmp, ...req.data });
-        await UPDATE(DataStatuses).where({ data_ID: req.data.ID }).with({ status_code: 'TBU' });
+        const data = { ...tmp, ...req.data }
+        await registerDataChange(data, 'TBU');
+        return data;
+    })
+
+    this.on('DELETE', Data, async (req, next) => {
+        if (!req.data.ID) {
+            next();
+        }
+        const tmp = await SELECT.from(Data, req.data.ID);
+        const data = { ...tmp };
+        await registerDataChange(data, 'TBD');
+        return;
+    })
+
+    this.on('CREATE', Data, async (req, next) => {
+        if (!req.data.ID) {
+            next();
+        }
+        const data = { ...req.data };
+        await registerDataChange(data, 'TBC');
+        return data;
     })
 
 
@@ -21,13 +35,43 @@ module.exports = function (srv) {
         const data = await SELECT.from(DataTempStorage);
 
         for (let d of data) {
-            await UPDATE(Data, d.ID).with(d);
-            await DELETE.from(DataTempStorage, d.ID);
-            await UPDATE(DataStatuses).where({ data_ID: d.ID }).with({ status_code: 'U' });
+            const { ID } = d;
+            const { status_code } = await SELECT.one.from(DataStatuses).where({ data_ID: ID }).columns('status_code');
+            switch (status_code) {
+                case 'TBU':
+                case 'U': {
+                    await UPDATE(Data, ID).with({ ...d });
+                    await setStatus(ID, 'U');
+                    break;
+                };
+                case 'TBD': {
+                    await DELETE.from(Data, ID);
+                    await setStatus(ID, 'D');
+                    break;
+                };
+                case 'TBC': {
+                    await INSERT.into(Data).entries({ ...d });
+                    await setStatus(ID, 'N');
+                    break;
+                }
+            }
+            await DELETE.from(DataTempStorage, ID);
         }
     })
 
-    this.after('CREATE', Data, async (data, req) => {
-        await INSERT.into(DataStatuses).entries({ data_ID: data.ID, status_code: 'N' });
-    })
+    async function setStatus(data_ID, status_code) {
+        const exist = await SELECT.one.from(DataStatuses).where({ data_ID });
+        if (exist) {
+            await UPDATE(DataStatuses).where({ data_ID }).with({ status_code });
+            return;
+        }
+        await INSERT.into(DataStatuses).entries({ data_ID, status_code });
+        return;
+    }
+
+    async function registerDataChange(data, status_code) {
+        await INSERT.into(DataTempStorage).entries(data);
+        await setStatus(data.ID, status_code);
+        return;
+    }
 }

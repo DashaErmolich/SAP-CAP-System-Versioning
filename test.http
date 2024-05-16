@@ -52,16 +52,16 @@ Content-Type: application/json
 
 
 ### UPDATE DATA 1
-PATCH  {{server}}/app/Data/538c3507-e6f4-42c8-bcb5-90f3a91ae309
+PATCH  {{server}}/app/Data/8dccae16-8d8b-49cb-acb8-649789bdb9de
 Content-Type: application/json
 
 {
-    "title": "Title 7",
+    "title": "Title 8",
     "type": "A"
 }
 
 ### UPDATE DATA 2
-PATCH  {{server}}/app/Data/62a386d6-80df-495e-af5a-15c7184e3400
+PATCH  {{server}}/app/Data/943c6963-9b30-42ea-87df-04f85efff5c5
 Content-Type: application/json
 
 {
@@ -71,7 +71,7 @@ Content-Type: application/json
 
 
 ### UPDATE DATA STATUS
-PATCH  {{server}}/app/DataStatuses/538c3507-e6f4-42c8-bcb5-90f3a91ae309
+PATCH  {{server}}/app/DataStatuses/84c2572e-be31-4e75-8a3f-d2d2d6e395d7
 Content-Type: application/json
 
 {
@@ -85,7 +85,7 @@ Content-Type: application/json
 
 
 ### DELETE DATA 1
-DELETE   {{server}}/app/Data/ec353784-9ceb-46af-999a-7b139d8d9f17
+DELETE   {{server}}/app/Data/b5318e80-3ccd-4f64-9ae9-039cca712d66
 
 
 

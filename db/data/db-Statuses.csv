@@ -2,4 +2,6 @@ code;name;descr
 N;NEW;New data
 U;UPDATED;Updated data
 D;DELETED;Deleted data
-TBU;SCHEDULED_TO_CHANGE;To be updated data
+TBU;TO_BE_UPDATED;To be updated data
+TBD;TO_BE_DELETED;To be deleted data
+TBC;TO_BE_CREATED;To be created data
