@@ -1,35 +1,42 @@
 module.exports = function (srv) {
     const { Data, DataTempStorage, DataStatuses } = srv.entities;
 
-    this.on('UPDATE', Data, async (req, next) => {
+    this.on(['UPDATE', 'CREATE', 'DELETE'], Data, async (req, next) => {
         if (!req.data.ID) {
-            next();
+            return next();
         }
-        const tmp = await SELECT.from(Data, req.data.ID);
-        const data = { ...tmp, ...req.data }
-        await registerDataChange(data, 'TBU');
-        return data;
-    })
+        await INSERT.into(DataTempStorage).entries(getDataChange(req.event, req.data));
+        await setStatus(req.data.ID, getDataChangeStatusCode(req.event));
+        return req.data;
 
-    this.on('DELETE', Data, async (req, next) => {
-        if (!req.data.ID) {
-            next();
+        async function getDataChange(event, reqData)  {
+        switch (event) {
+            case 'UPDATE': {
+                return { ...(await SELECT.from(Data, reqData.ID)), ...req.data };
+            }
+            case 'DELETE': {
+                return await SELECT.from(Data, req.data.ID);
+            }
+            case 'CREATE': {
+                return reqData;
+            }
         }
-        const tmp = await SELECT.from(Data, req.data.ID);
-        const data = { ...tmp };
-        await registerDataChange(data, 'TBD');
-        return;
-    })
+    }
 
-    this.on('CREATE', Data, async (req, next) => {
-        if (!req.data.ID) {
-            next();
+    function getDataChangeStatusCode(event) {
+        switch (event) {
+            case 'UPDATE': {
+                return 'TBU';
+            }
+            case 'DELETE': {
+                return 'TBD';
+            }
+            case 'CREATE': {
+                return 'TBC';
+            }
         }
-        const data = { ...req.data };
-        await registerDataChange(data, 'TBC');
-        return data;
+    }
     })
-
 
     this.on('changeData', async () => {
         const data = await SELECT.from(DataTempStorage);
@@ -69,12 +76,6 @@ module.exports = function (srv) {
             return;
         }
         await INSERT.into(DataStatuses).entries({ data_ID, status_code });
-        return;
-    }
-
-    async function registerDataChange(data, status_code) {
-        await INSERT.into(DataTempStorage).entries(data);
-        await setStatus(data.ID, status_code);
         return;
     }
 }
